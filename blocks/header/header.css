@@ -1,0 +1,7 @@
+.header {
+  padding: 45px 200px 40px;
+  min-height: 74px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
