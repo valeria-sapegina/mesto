@@ -1,0 +1,6 @@
+.edit-button__img {
+  background-image: url(../../../images/edit-button.png);
+  width: 10px;
+  height: 10px;
+  margin: auto;
+}
