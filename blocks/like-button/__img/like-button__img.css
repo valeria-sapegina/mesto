@@ -1,0 +1,6 @@
+.like-button__img {
+  background-image: url(../../../images/like-button.png);
+  width: 22px;
+  height: 19px;
+  margin: auto;
+}
