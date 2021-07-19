@@ -6,3 +6,7 @@
   background-color: #000;
 }
 
+.add-button:hover {
+  opacity: 0.7;
+}
+

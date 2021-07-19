@@ -4,3 +4,12 @@
   height: 19px;
   margin: auto;
 }
+
+.like-button__img:hover {
+  opacity: 0.7;
+}
+
+.like-button__img:active {
+  opacity: 1;
+  background-image: url(../../../images/like-button-active.svg);
+}
