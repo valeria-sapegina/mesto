@@ -12,7 +12,7 @@
   opacity: 0.7;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 950px) {
   .add-button {
     width: 100%;
     margin-top: 35px;
