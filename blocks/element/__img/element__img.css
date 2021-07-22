@@ -2,5 +2,6 @@
   border-radius: 10px 10px 0px 0px;
   width: 280px;
   height: 280px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }

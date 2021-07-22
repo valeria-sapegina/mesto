@@ -6,7 +6,8 @@
   position:absolute;
   top: -40px;
   right: -40px;
-  object-fit: fill;
+  -o-object-fit: fill;
+     object-fit: fill;
   cursor: pointer;
 }
 .popup__close:hover {
