@@ -11,7 +11,6 @@
   <div class="page">
     <header class="header">
       <img src="./images/logo.svg" alt="Логотип" class="header__logo">
-      <div class="header__line"></div>
     </header>
 
     <main class="content">
@@ -21,12 +20,12 @@
           <div class="profile__info">
             <div class="profile__group">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
-              <button class="edit-button"></button>
+              <button class="button button_type_edit" type="button"></button>
             </div>
             <p class="profile__job">Исследователь океана</p>
           </div>
         </div>
-        <button class="add-button"></button>
+        <button class="button button_type_add" type="button"></button>
       </section>
 
       <section class="elements">
@@ -35,7 +34,7 @@
             <img src="./images/taganay.jpg" alt="Таганай" class="element__img">
             <div class="element__group">
               <h2 class="element__title">Таганай</h2>
-              <button class="like-button"></button>
+              <button class="button button_type_like" type="button"></button>
             </div>
           </li>
 
@@ -43,7 +42,7 @@
             <img src="./images/malyi_kisegach.jpg" alt="Малый Кисегач" class="element__img">
             <div class="element__group">
               <h2 class="element__title">Малый Кисегач</h2>
-              <button class="like-button"></button>
+              <button class="button button_type_like" type="button"></button>
             </div>
           </li>
 
@@ -51,7 +50,7 @@
             <img src="./images/arakulskye_shihany.jpg" alt="Аракульские Шиханы" class="element__img">
             <div class="element__group">
               <h2 class="element__title">Аракульские Шиханы</h2>
-              <button class="like-button"></button>
+              <button class="button button_type_like" type="button"></button>
             </div>
           </li>
 
@@ -59,7 +58,7 @@
             <img src="./images/berdyaush.jpg" alt="Бердяуш" class="element__img">
             <div class="element__group">
               <h2 class="element__title">Бердяуш</h2>
-              <button class="like-button"></button>
+              <button class="button button_type_like" type="button"></button>
             </div>
           </li>
 
@@ -67,7 +66,7 @@
             <img src="./images/turgoyak.jpg" alt="Тургояк" class="element__img">
             <div class="element__group">
               <h2 class="element__title">Тургояк</h2>
-              <button class="like-button"></button>
+              <button class="button button_type_like" type="button"></button>
             </div>
           </li>
 
@@ -75,7 +74,7 @@
             <img src="./images/nurgush.jpg" alt="Нургуш" class="element__img">
             <div class="element__group">
               <h2 class="element__title">Нургуш</h2>
-              <button class="like-button"></button>
+              <button class="button button_type_like" type="button"></button>
             </div>
           </li>
         </ul>
@@ -87,15 +86,15 @@
     </footer>
 
     <div class="popup">
-      <form class="popup__container">
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__input popup__input_content_name" type="text" value="">
-        <div class="popup__line"></div>
-        <input class="popup__input popup__input_content_job" type="text" value="">
-        <div class="popup__line"></div>
-        <button class="popup__submit-btn" type="submit">Сохранить</button>
-        <div class="popup__close"></div>
-      </form>
+      <div class="popup__container">
+        <form class="popup__form" name="Редактировать профиль">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <input class="popup__input popup__input_content_name" type="text" value="" name="name">
+          <input class="popup__input popup__input_content_job" type="text" value="" name="job">
+          <button class="popup__submit-btn" type="submit">Сохранить</button>
+          <button type="button" class="popup__close"></button>
+        </form>
+      </div>
     </div>
   </div>
   <script src="./scripts/index.js" defer></script>

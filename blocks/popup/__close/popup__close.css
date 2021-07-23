@@ -9,6 +9,9 @@
   -o-object-fit: fill;
      object-fit: fill;
   cursor: pointer;
+  border: 0;
+  background-color: inherit;
+  transition: opacity, 1s;
 }
 .popup__close:hover {
   opacity: 0.6;

@@ -1,36 +1,43 @@
-const popup = document.querySelector(".popup");
-const editButton = document.querySelector(".edit-button");
-const closeButton = document.querySelector(".popup__close");
+const popup = document.querySelector('.popup');
+const editButton = document.querySelector('.button_type_edit');
+const closeButton = document.querySelector('.popup__close');
 
-const profileName = document.querySelector(".profile__name");
-const profileJob = document.querySelector(".profile__job");
-const inputName = document.querySelector(".popup__input_content_name");
-const inputJob = document.querySelector(".popup__input_content_job");
+const profileName = document.querySelector('.profile__name');
+const profileJob = document.querySelector('.profile__job');
+const inputName = document.querySelector('.popup__input_content_name');
+const inputJob = document.querySelector('.popup__input_content_job');
 
+const form = document.querySelector('.popup__container');
 
-function togglePopup(event) {
-  event.stopPropagation;
-  popup.classList.toggle("popup_opened");
+// Функция открытия попап
+function openPopup(event) {
+  popup.classList.toggle('popup_opened');
+
+  //Добавление текущих значений name и job в поля input
+  inputName.value = profileName.textContent;
+  inputJob.value = profileJob.textContent;
 }
 
-editButton.addEventListener("click", togglePopup);
-closeButton.addEventListener("click", togglePopup);
+//Функция закрытия попап
+function closePopup(event) {
+  popup.classList.toggle('popup_opened');
+}
 
-inputName.value = profileName.textContent;
-inputJob.value = profileJob.textContent;
-
-const form = document.querySelector(".popup__container");
-
+//Функция отправки формы
 function formSubmitHandler (evt) {
-    evt.preventDefault();
+  evt.preventDefault();
 
-    let name = inputName.value;
-    let job = inputJob.value;
+  //Получения введенных значений в поля name и job
+  let name = inputName.value;
+  let job = inputJob.value;
 
-    profileName.textContent = name;
-    profileJob.textContent = job;
+  //Сохранение полученных значений name и job в соответствующие поля html
+  profileName.textContent = name;
+  profileJob.textContent = job;
 
-    togglePopup(event);
+  closePopup();
 }
 
+editButton.addEventListener('click', openPopup);
+closeButton.addEventListener('click', closePopup);
 form.addEventListener('submit', formSubmitHandler);

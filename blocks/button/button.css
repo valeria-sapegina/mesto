@@ -1,0 +1,15 @@
+.button {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: #000;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: opacity, 1s;
+}
+
+.button:hover {
+  opacity: 0.6;
+}
