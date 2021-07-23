@@ -1,4 +1,14 @@
 .profile__group {
   position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
 }
 
+@media screen and (max-width: 500px) {
+  .profile__group {
+    max-width: 250px;
+    padding-right: 28px;
+    margin-left: 28px;
+  }
+}

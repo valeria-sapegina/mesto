@@ -7,7 +7,7 @@ const profileJob = document.querySelector('.profile__job');
 const inputName = document.querySelector('.popup__input_content_name');
 const inputJob = document.querySelector('.popup__input_content_job');
 
-const form = document.querySelector('.popup__container');
+const form = document.querySelector('.popup__form');
 
 // Функция открытия попап
 function openPopup(event) {

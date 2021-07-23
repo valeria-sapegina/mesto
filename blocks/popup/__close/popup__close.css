@@ -10,7 +10,7 @@
      object-fit: fill;
   cursor: pointer;
   border: 0;
-  background-color: inherit;
+  background-color: rgba(0,0,0,0.5);
   transition: opacity, 1s;
 }
 .popup__close:hover {
