@@ -1,4 +1,4 @@
-.button_type_like {
+.button__like {
   width: 22px;
   height: 19px;
   border: 0;
@@ -7,11 +7,6 @@
   background-color: #fff;
 }
 
-.button_type_like:hover {
+.button__like:hover {
   opacity: 0.5;
-}
-
-.button_type_like:active {
-  opacity: 1;
-  background-image: url(../../../images/like-button-active.svg);
 }

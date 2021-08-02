@@ -1,10 +1,9 @@
 const popup = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
-const editButton = document.querySelector('.button_type_edit');
+const editButton = document.querySelector('.button__edit');
 const closeButton = document.querySelectorAll('.popup__close');
-const addButton = document.querySelector('.button_type_add');
-
+const addButton = document.querySelector('.button__add');
 
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
@@ -107,28 +106,43 @@ function formAddSubmitHandler (evt) {
 
   addItem(item);
   closePopup(evt);
-
-  deleteButton = elementList.querySelectorAll('.button_type_delete');
-  deleteButton.forEach(function(item) {
-  item.addEventListener('click', deleteItem);
-  });
+  deleteButtonListener();
+  likeButtonListener();
 }
 
 function deleteItem(item) {
   item.target.closest('.element').remove();
 }
 
+function like(evt) {
+  evt.target.classList.toggle('button__like_active');
+}
+
+function deleteButtonListener() {
+  deleteButton = elementList.querySelectorAll('.button__delete');
+  deleteButton.forEach(function(item) {
+    item.addEventListener('click', deleteItem);
+  });
+}
+
+function likeButtonListener() {
+  likeButton = elementList.querySelectorAll('.button__like');
+  likeButton.forEach(function(item) {
+    item.addEventListener('click', like);
+  });
+}
+
 initialItem.forEach(addItem);
-let deleteButton = elementList.querySelectorAll('.button_type_delete');
+let deleteButton = elementList.querySelectorAll('.button__delete');
+let likeButton = elementList.querySelectorAll('.button__like');
+deleteButtonListener();
+likeButtonListener();
 
 editButton.addEventListener('click', openPopupEdit);
+addButton.addEventListener('click', openPopupAdd);
 closeButton.forEach(function(item) {
   item.addEventListener('click', closePopup);
 });
 editForm.addEventListener('submit', formEditSubmitHandler);
-addButton.addEventListener('click', openPopupAdd);
 addForm.addEventListener('submit', formAddSubmitHandler);
 
-deleteButton.forEach(function(item) {
-  item.addEventListener('click', deleteItem);
-});
