@@ -4,4 +4,8 @@
   border: 0;
   background-image: url(../../../images/trash.svg);
   background-size: 19px 19px;
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  background-color: rgba(0, 0, 0, 0);
 }
