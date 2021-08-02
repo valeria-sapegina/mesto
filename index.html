@@ -36,6 +36,7 @@
               <h2 class="element__title">Таганай</h2>
               <button class="button button_type_like" type="button"></button>
             </div>
+            <button class="button button_type_delete" type="button"></button>
           </li>
 
           <li class="element">
@@ -84,17 +85,29 @@
     <footer class="footer">
       <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
     </footer>
+  </div>
 
-    <div class="popup">
-      <div class="popup__container">
-        <form class="popup__form" name="Edit_profile">
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <input class="popup__input popup__input_content_name" type="text" value="" name="name">
-          <input class="popup__input popup__input_content_job" type="text" value="" name="job">
-          <button class="popup__submit-btn" type="submit">Сохранить</button>
-        </form>
-        <button type="button" class="popup__close"></button>
-      </div>
+  <div class="popup popup_type_edit">
+    <div class="popup__container">
+      <form class="popup__form" name="Edit_profile">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input class="popup__input popup__input_content_name" type="text" value="" name="name">
+        <input class="popup__input popup__input_content_job" type="text" value="" name="job">
+        <button class="popup__submit-btn" type="submit">Сохранить</button>
+      </form>
+      <button type="button" class="popup__close"></button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_add">
+    <div class="popup__container">
+      <form class="popup__form" name="Add_photo">
+        <h2 class="popup__title">Новое место</h2>
+        <input class="popup__input popup__input_content_place-name" type="text" value="" name="place-name" placeholder="Название">
+        <input class="popup__input popup__input_content_image-link" type="text" value="" name="image-link" placeholder="Ссылка на картинку">
+        <button class="popup__submit-btn" type="submit">Создать</button>
+      </form>
+      <button type="button" class="popup__close"></button>
     </div>
   </div>
   <script src="./scripts/index.js" defer></script>

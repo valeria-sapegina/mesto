@@ -1,0 +1,7 @@
+.button_type_delete {
+  width: 19px;
+  height: 19px;
+  border: 0;
+  background-image: url(../../../images/trash.svg);
+  background-size: 19px 19px;
+}
