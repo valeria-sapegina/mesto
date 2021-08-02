@@ -30,54 +30,7 @@
 
       <section class="elements">
         <ul class="elements__list">
-          <li class="element">
-            <img src="./images/taganay.jpg" alt="Таганай" class="element__img">
-            <div class="element__group">
-              <h2 class="element__title">Таганай</h2>
-              <button class="button button_type_like" type="button"></button>
-            </div>
-            <button class="button button_type_delete" type="button"></button>
-          </li>
 
-          <li class="element">
-            <img src="./images/malyi_kisegach.jpg" alt="Малый Кисегач" class="element__img">
-            <div class="element__group">
-              <h2 class="element__title">Малый Кисегач</h2>
-              <button class="button button_type_like" type="button"></button>
-            </div>
-          </li>
-
-          <li class="element">
-            <img src="./images/arakulskye_shihany.jpg" alt="Аракульские Шиханы" class="element__img">
-            <div class="element__group">
-              <h2 class="element__title">Аракульские Шиханы</h2>
-              <button class="button button_type_like" type="button"></button>
-            </div>
-          </li>
-
-          <li class="element">
-            <img src="./images/berdyaush.jpg" alt="Бердяуш" class="element__img">
-            <div class="element__group">
-              <h2 class="element__title">Бердяуш</h2>
-              <button class="button button_type_like" type="button"></button>
-            </div>
-          </li>
-
-          <li class="element">
-            <img src="./images/turgoyak.jpg" alt="Тургояк" class="element__img">
-            <div class="element__group">
-              <h2 class="element__title">Тургояк</h2>
-              <button class="button button_type_like" type="button"></button>
-            </div>
-          </li>
-
-          <li class="element">
-            <img src="./images/nurgush.jpg" alt="Нургуш" class="element__img">
-            <div class="element__group">
-              <h2 class="element__title">Нургуш</h2>
-              <button class="button button_type_like" type="button"></button>
-            </div>
-          </li>
         </ul>
       </section>
     </main>
@@ -101,7 +54,7 @@
 
   <div class="popup popup_type_add">
     <div class="popup__container">
-      <form class="popup__form" name="Add_photo">
+      <form class="popup__form" name="Add_card">
         <h2 class="popup__title">Новое место</h2>
         <input class="popup__input popup__input_content_place-name" type="text" value="" name="place-name" placeholder="Название">
         <input class="popup__input popup__input_content_image-link" type="text" value="" name="image-link" placeholder="Ссылка на картинку">
@@ -110,6 +63,17 @@
       <button type="button" class="popup__close"></button>
     </div>
   </div>
+
+  <template id="element-template">
+    <li class="element">
+      <img src="" alt="Изображение места" class="element__img">
+      <div class="element__group">
+        <h2 class="element__title"></h2>
+        <button class="button button_type_like" type="button"></button>
+      </div>
+      <button class="button button_type_delete" type="button"></button>
+    </li>
+  </template>
   <script src="./scripts/index.js" defer></script>
 </body>
 </html>
