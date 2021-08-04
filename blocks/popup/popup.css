@@ -12,8 +12,6 @@
       -ms-flex-align: center;
           align-items: center;
   color: #000;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   opacity: 0;
   transition-property: opacity, height;
