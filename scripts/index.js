@@ -1,8 +1,8 @@
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
-const editButton = document.querySelector('.button__edit');
+const editButton = document.querySelector('.button_type_edit');
 const closeButtons = document.querySelectorAll('.popup__close');
-const addButton = document.querySelector('.button__add');
+const addButton = document.querySelector('.button_type_add');
 
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
@@ -110,14 +110,14 @@ function formAddSubmitHandler (evt) {
 }
 
 function listenerDeleteButtons() {
-  let deleteButtons = elementList.querySelectorAll('.button__delete');
+  let deleteButtons = elementList.querySelectorAll('.element__delete');
   deleteButtons.forEach(function(item) {
     item.addEventListener('click', deleteItem);
   });
 }
 
 function listenerLikeButtons() {
-  let likeButtons = elementList.querySelectorAll('.button__like');
+  let likeButtons = elementList.querySelectorAll('.element__like');
   likeButtons.forEach(function(item) {
     item.addEventListener('click', like);
   });
@@ -135,12 +135,11 @@ function deleteItem(evt) {
 }
 
 function like(evt) {
-  evt.target.classList.toggle('button__like_active');
+  evt.target.classList.toggle('element__like_active');
 }
 
 function openImage(evt) {
   let parent = evt.target.parentElement;
-  console.log(document.querySelector('.popup__image-container').closest('.popup'))
   document.querySelector('.popup__image-container').closest('.popup').classList.toggle('popup_opened');
   document.querySelector('.popup__image').src = evt.target.src;
   document.querySelector('.popup__caption').textContent = parent.querySelector('.element__title').textContent;
