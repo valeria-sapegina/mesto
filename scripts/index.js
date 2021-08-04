@@ -108,6 +108,7 @@ function formAddSubmitHandler (evt) {
   closePopup(evt);
   deleteButtonListener();
   likeButtonListener();
+  elementImageListener();
 }
 
 function deleteItem(item) {
@@ -118,25 +119,38 @@ function like(evt) {
   evt.target.classList.toggle('button__like_active');
 }
 
+function openImage(evt) {
+  let parent = evt.target.parentElement;
+  document.querySelector('.popup__image_container').parentElement.classList.toggle('popup_opened');
+  document.querySelector('.popup__image').src = evt.target.src;
+  document.querySelector('.popup__caption').textContent = parent.querySelector('.element__title').textContent;
+}
+
 function deleteButtonListener() {
-  deleteButton = elementList.querySelectorAll('.button__delete');
+  let deleteButton = elementList.querySelectorAll('.button__delete');
   deleteButton.forEach(function(item) {
     item.addEventListener('click', deleteItem);
   });
 }
 
 function likeButtonListener() {
-  likeButton = elementList.querySelectorAll('.button__like');
+  let likeButton = elementList.querySelectorAll('.button__like');
   likeButton.forEach(function(item) {
     item.addEventListener('click', like);
   });
 }
 
+function elementImageListener() {
+  let elementImage = elementList.querySelectorAll('.element__img');
+  elementImage.forEach(function(item) {
+    item.addEventListener('click', openImage);
+  });
+}
+
 initialItem.forEach(addItem);
-let deleteButton = elementList.querySelectorAll('.button__delete');
-let likeButton = elementList.querySelectorAll('.button__like');
 deleteButtonListener();
 likeButtonListener();
+elementImageListener();
 
 editButton.addEventListener('click', openPopupEdit);
 addButton.addEventListener('click', openPopupAdd);
