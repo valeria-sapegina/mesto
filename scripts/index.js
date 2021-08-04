@@ -1,8 +1,7 @@
-const popup = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
 const editButton = document.querySelector('.button__edit');
-const closeButton = document.querySelectorAll('.popup__close');
+const closeButtons = document.querySelectorAll('.popup__close');
 const addButton = document.querySelector('.button__add');
 
 const profileName = document.querySelector('.profile__name');
@@ -83,8 +82,10 @@ function addItem(item) {
   newItem.querySelector('.element__title').innerText = item.name;
   newItem.querySelector('.element__img').src = item.link;
   elementList.prepend(newItem);
+  listenerDeleteButtons();
+  listenerLikeButtons();
+  listenerElementImages();
 }
-
 
 //Функция отправки формы добавления карточки
 function formAddSubmitHandler (evt) {
@@ -106,13 +107,31 @@ function formAddSubmitHandler (evt) {
 
   addItem(item);
   closePopup(evt);
-  deleteButtonListener();
-  likeButtonListener();
-  elementImageListener();
 }
 
-function deleteItem(item) {
-  item.target.closest('.element').remove();
+function listenerDeleteButtons() {
+  let deleteButtons = elementList.querySelectorAll('.button__delete');
+  deleteButtons.forEach(function(item) {
+    item.addEventListener('click', deleteItem);
+  });
+}
+
+function listenerLikeButtons() {
+  let likeButtons = elementList.querySelectorAll('.button__like');
+  likeButtons.forEach(function(item) {
+    item.addEventListener('click', like);
+  });
+}
+
+function listenerElementImages() {
+  let elementImages = elementList.querySelectorAll('.element__img');
+  elementImages.forEach(function(item) {
+    item.addEventListener('click', openImage);
+  });
+}
+
+function deleteItem(evt) {
+  evt.target.closest('.element').remove();
 }
 
 function like(evt) {
@@ -121,40 +140,17 @@ function like(evt) {
 
 function openImage(evt) {
   let parent = evt.target.parentElement;
-  document.querySelector('.popup__image_container').parentElement.classList.toggle('popup_opened');
+  console.log(document.querySelector('.popup__image-container').closest('.popup'))
+  document.querySelector('.popup__image-container').closest('.popup').classList.toggle('popup_opened');
   document.querySelector('.popup__image').src = evt.target.src;
   document.querySelector('.popup__caption').textContent = parent.querySelector('.element__title').textContent;
 }
 
-function deleteButtonListener() {
-  let deleteButton = elementList.querySelectorAll('.button__delete');
-  deleteButton.forEach(function(item) {
-    item.addEventListener('click', deleteItem);
-  });
-}
-
-function likeButtonListener() {
-  let likeButton = elementList.querySelectorAll('.button__like');
-  likeButton.forEach(function(item) {
-    item.addEventListener('click', like);
-  });
-}
-
-function elementImageListener() {
-  let elementImage = elementList.querySelectorAll('.element__img');
-  elementImage.forEach(function(item) {
-    item.addEventListener('click', openImage);
-  });
-}
-
 initialItem.forEach(addItem);
-deleteButtonListener();
-likeButtonListener();
-elementImageListener();
 
 editButton.addEventListener('click', openPopupEdit);
 addButton.addEventListener('click', openPopupAdd);
-closeButton.forEach(function(item) {
+closeButtons.forEach(function(item) {
   item.addEventListener('click', closePopup);
 });
 editForm.addEventListener('submit', formEditSubmitHandler);
