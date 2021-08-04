@@ -4,4 +4,10 @@
   height: 280px;
   -o-object-fit: cover;
      object-fit: cover;
+  transition: opacity, 1s;
+}
+
+.element__img:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }
