@@ -12,6 +12,10 @@ const inputJob = document.querySelector('.popup__input_content_job');
 const editForm = document.querySelector('[name=Edit_profile]');
 const addForm = document.querySelector('[name=Add_card]');
 
+const popupImageContainer = document.querySelector('.popup__image-container');
+const popupImage = document.querySelector('.popup__image');
+const popupCaption = document.querySelector('.popup__caption');
+
 const elementItemTemplate = document.getElementById('element-template');
 const elementList = document.querySelector('.elements__list');
 const initialItem = [
@@ -42,18 +46,18 @@ const initialItem = [
 ];
 
 
-// Функция открытия попап редактирования профиля
-function openPopupEdit(event) {
-  popupEdit.classList.toggle('popup_opened');
+// Функция открытия и добавления значений в value попап редактирования профиля
+function openPopupEdit(popup) {
+  openPopup(popup);
 
   //Добавление текущих значений name и job в поля input
   inputName.value = profileName.textContent;
   inputJob.value = profileJob.textContent;
 }
 
-// Функция открытия попап добавления места
-function openPopupAdd(event) {
-  popupAdd.classList.toggle('popup_opened');
+// Функция открытия попап
+function openPopup(popup) {
+  popup.closest('.popup').classList.toggle('popup_opened');
 }
 
 //Функция закрытия попап
@@ -66,8 +70,8 @@ function formEditSubmitHandler (evt) {
   evt.preventDefault();
 
   //Получения введенных значений в поля name и job
-  let name = inputName.value;
-  let job = inputJob.value;
+  const name = inputName.value;
+  const job = inputJob.value;
 
   //Сохранение полученных значений name и job в соответствующие поля html
   profileName.textContent = name;
@@ -82,9 +86,9 @@ function addItem(item) {
   newItem.querySelector('.element__title').innerText = item.name;
   newItem.querySelector('.element__img').src = item.link;
   elementList.prepend(newItem);
-  listenerDeleteButtons();
-  listenerLikeButtons();
-  listenerElementImages();
+  setDeleteClickListener();
+  setLikeClickListener();
+  setImagesClickListener();
 }
 
 //Функция отправки формы добавления карточки
@@ -95,12 +99,10 @@ function formAddSubmitHandler (evt) {
   let name = document.querySelector('.popup__input_content_place-name').value;
   let link = document.querySelector('.popup__input_content_image-link').value;
 
-  const item = [
-    {
-      name: '',
-      link: ''
-    }
-  ]
+  const item = {
+    name: '',
+    link: ''
+  }
 
   item.name = name;
   item.link = link;
@@ -109,21 +111,21 @@ function formAddSubmitHandler (evt) {
   closePopup(evt);
 }
 
-function listenerDeleteButtons() {
+function setDeleteClickListener() {
   let deleteButtons = elementList.querySelectorAll('.element__delete');
   deleteButtons.forEach(function(item) {
     item.addEventListener('click', deleteItem);
   });
 }
 
-function listenerLikeButtons() {
+function setLikeClickListener() {
   let likeButtons = elementList.querySelectorAll('.element__like');
   likeButtons.forEach(function(item) {
     item.addEventListener('click', like);
   });
 }
 
-function listenerElementImages() {
+function setImagesClickListener() {
   let elementImages = elementList.querySelectorAll('.element__img');
   elementImages.forEach(function(item) {
     item.addEventListener('click', openImage);
@@ -138,17 +140,23 @@ function like(evt) {
   evt.target.classList.toggle('element__like_active');
 }
 
+
 function openImage(evt) {
   let parent = evt.target.parentElement;
-  document.querySelector('.popup__image-container').closest('.popup').classList.toggle('popup_opened');
-  document.querySelector('.popup__image').src = evt.target.src;
-  document.querySelector('.popup__caption').textContent = parent.querySelector('.element__title').textContent;
+  popupImageContainer.closest('.popup').classList.toggle('popup_opened');
+  popupImage.src = evt.target.src;
+  popupCaption.textContent = parent.querySelector('.element__title').textContent;
 }
 
 initialItem.forEach(addItem);
 
-editButton.addEventListener('click', openPopupEdit);
-addButton.addEventListener('click', openPopupAdd);
+editButton.addEventListener('click', () => {
+  openPopupEdit(popupEdit);
+});
+
+addButton.addEventListener('click', () => {
+  openPopup(popupAdd);
+});
 closeButtons.forEach(function(item) {
   item.addEventListener('click', closePopup);
 });
