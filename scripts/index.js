@@ -86,9 +86,9 @@ function addItem(item) {
   newItem.querySelector('.element__title').innerText = item.name;
   newItem.querySelector('.element__img').src = item.link;
   elementList.prepend(newItem);
-  setDeleteClickListener();
-  setLikeClickListener();
-  setImagesClickListener();
+  setDeleteClickListener(newItem);
+  setLikeClickListener(newItem);
+  setImagesClickListener(newItem);
 }
 
 //Функция отправки формы добавления карточки
@@ -111,25 +111,19 @@ function formAddSubmitHandler (evt) {
   closePopup(evt);
 }
 
-function setDeleteClickListener() {
-  let deleteButtons = elementList.querySelectorAll('.element__delete');
-  deleteButtons.forEach(function(item) {
-    item.addEventListener('click', deleteItem);
-  });
+function setDeleteClickListener(newItem) {
+  let deleteButton = newItem.querySelector('.element__delete');
+  deleteButton.addEventListener('click', deleteItem);
 }
 
-function setLikeClickListener() {
-  let likeButtons = elementList.querySelectorAll('.element__like');
-  likeButtons.forEach(function(item) {
-    item.addEventListener('click', like);
-  });
+function setLikeClickListener(newItem) {
+  let likeButton = newItem.querySelector('.element__like');
+  likeButton.addEventListener('click', like);
 }
 
-function setImagesClickListener() {
-  let elementImages = elementList.querySelectorAll('.element__img');
-  elementImages.forEach(function(item) {
-    item.addEventListener('click', openImage);
-  });
+function setImagesClickListener(newItem) {
+  let elementImage = newItem.querySelector('.element__img');
+  elementImage.addEventListener('click', openImage);
 }
 
 function deleteItem(evt) {
