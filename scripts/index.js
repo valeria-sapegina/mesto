@@ -1,7 +1,6 @@
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
 const editButton = document.querySelector('.button_type_edit');
-const closeButtons = document.querySelectorAll('.popup__close');
 const addButton = document.querySelector('.button_type_add');
 
 const profileName = document.querySelector('.profile__name');
@@ -9,14 +8,9 @@ const profileJob = document.querySelector('.profile__job');
 const inputName = document.querySelector('.popup__input_content_name');
 const inputJob = document.querySelector('.popup__input_content_job');
 
-const editForm = document.querySelector('[name=Edit_profile]');
-const addForm = document.querySelector('[name=Add_card]');
+const editForm = document.forms.name=Edit_profile;
+const addForm = document.forms.name=Add_card;
 
-const popupImageContainer = document.querySelector('.popup__image-container');
-const popupImage = document.querySelector('.popup__image');
-const popupCaption = document.querySelector('.popup__caption');
-
-const elementItemTemplate = document.getElementById('element-template');
 const elementList = document.querySelector('.elements__list');
 const initialItem = [
   {
@@ -44,7 +38,6 @@ const initialItem = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-
 
 // Функция открытия и добавления значений в value попап редактирования профиля
 function openPopupEdit(popup) {
@@ -82,13 +75,11 @@ function formEditSubmitHandler (evt) {
 
 //Добавление карточки места
 function addItem(item) {
+  const elementItemTemplate = document.getElementById('element-template');
   const newItem = elementItemTemplate.content.firstElementChild.cloneNode(true);
   newItem.querySelector('.element__title').innerText = item.name;
   newItem.querySelector('.element__img').src = item.link;
   elementList.prepend(newItem);
-  setDeleteClickListener(newItem);
-  setLikeClickListener(newItem);
-  setImagesClickListener(newItem);
 }
 
 //Функция отправки формы добавления карточки
@@ -111,32 +102,23 @@ function formAddSubmitHandler (evt) {
   closePopup(evt);
 }
 
-function setDeleteClickListener(newItem) {
-  let deleteButton = newItem.querySelector('.element__delete');
-  deleteButton.addEventListener('click', deleteItem);
-}
-
-function setLikeClickListener(newItem) {
-  let likeButton = newItem.querySelector('.element__like');
-  likeButton.addEventListener('click', like);
-}
-
-function setImagesClickListener(newItem) {
-  let elementImage = newItem.querySelector('.element__img');
-  elementImage.addEventListener('click', openImage);
-}
-
+//Функция удаления карточки
 function deleteItem(evt) {
   evt.target.closest('.element').remove();
 }
 
+//Функция работы кнопки лайк
 function like(evt) {
   evt.target.classList.toggle('element__like_active');
 }
 
-
+//Функция открытия изображения карточки в отдельном окне
 function openImage(evt) {
   let parent = evt.target.parentElement;
+  const popupImageContainer = document.querySelector('.popup__image-container');
+  const popupImage = document.querySelector('.popup__image');
+  const popupCaption = document.querySelector('.popup__caption');
+
   popupImageContainer.closest('.popup').classList.toggle('popup_opened');
   popupImage.src = evt.target.src;
   popupCaption.textContent = parent.querySelector('.element__title').textContent;
@@ -151,9 +133,26 @@ editButton.addEventListener('click', () => {
 addButton.addEventListener('click', () => {
   openPopup(popupAdd);
 });
-closeButtons.forEach(function(item) {
-  item.addEventListener('click', closePopup);
-});
+
 editForm.addEventListener('submit', formEditSubmitHandler);
 addForm.addEventListener('submit', formAddSubmitHandler);
 
+elementList.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('element__delete')) {
+    deleteItem(evt);
+  }
+
+  if (evt.target.classList.contains('element__like')) {
+    like(evt);
+  }
+
+  if (evt.target.classList.contains('element__img')) {
+    openImage(evt);
+  }
+});
+
+document.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('popup__close')) {
+    closePopup(evt);
+  }
+});
