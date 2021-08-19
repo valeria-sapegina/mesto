@@ -55,6 +55,7 @@ function openPopup(popup) {
 
   document.addEventListener('keydown', closePopupKeyEscape);
 
+  //Отчистка формы
   const form = popup.querySelector('.popup__form');
   form.reset();
   resetErrorMessage (form, validationParameters);
@@ -134,6 +135,7 @@ function openImage(evt) {
   document.addEventListener('keydown', closePopupKeyEscape);
 };
 
+//Функция закрытия попап на кнопку esc
 function closePopupKeyEscape(evt) {
   const popup = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {

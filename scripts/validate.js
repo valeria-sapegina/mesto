@@ -21,6 +21,7 @@ function hideInputError(formElement, inputElement, validationParameters) {
   errorElement.textContent = '';
 };
 
+//Функция проверки валидности input
 function checkInputValidity(formElement, inputElement, validationParameters) {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, validationParameters);
@@ -29,6 +30,7 @@ function checkInputValidity(formElement, inputElement, validationParameters) {
   };
 };
 
+//Фунция сброса сообщение об ошибки валидации input
 function resetErrorMessage (formElement, validationParameters) {
   const inputList = Array.from(formElement.querySelectorAll(validationParameters.inputSelector));
 
@@ -37,6 +39,7 @@ function resetErrorMessage (formElement, validationParameters) {
   });
 };
 
+//Навешивание слушателей на все input
 function setEventListeners(formElement, validationParameters) {
   const inputList = Array.from(formElement.querySelectorAll(validationParameters.inputSelector));
 
@@ -53,12 +56,14 @@ function setEventListeners(formElement, validationParameters) {
   });
 };
 
+//Проверка на наличие невалидных input
 function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 };
 
+//Функция переключения состояний кнопки
 function toggleButtonState(inputList, buttonElement, validationParameters) {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(validationParameters.inactiveButtonClass);
