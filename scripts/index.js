@@ -8,8 +8,8 @@ const profileJob = document.querySelector('.profile__job');
 const inputName = document.querySelector('.popup__input_content_name');
 const inputJob = document.querySelector('.popup__input_content_job');
 
-const editForm = document.forms.name=Edit_profile;
-const addForm = document.forms.name=Add_card;
+const editForm = document.forms.name = Edit_profile;
+const addForm = document.forms.name = Add_card;
 
 const elementList = document.querySelector('.elements__list');
 const initialItem = [
@@ -50,16 +50,24 @@ function openPopupEdit(popup) {
 
 // Функция открытия попап
 function openPopup(popup) {
+
   popup.closest('.popup').classList.toggle('popup_opened');
+
+  document.addEventListener('keydown', closePopupKeyEscape);
+
+  const form = popup.querySelector('.popup__form');
+  form.reset();
+  resetErrorMessage (form, validationParameters);
 }
 
 //Функция закрытия попап
 function closePopup(evt) {
   evt.target.closest('.popup').classList.toggle('popup_opened');
+  document.removeEventListener('keydown', closePopupKeyEscape);
 }
 
 //Функция отправки формы редактирования профиля
-function formEditSubmitHandler (evt) {
+function formEditSubmitHandler(evt) {
   evt.preventDefault();
 
   //Получения введенных значений в поля name и job
@@ -83,7 +91,7 @@ function addItem(item) {
 }
 
 //Функция отправки формы добавления карточки
-function formAddSubmitHandler (evt) {
+function formAddSubmitHandler(evt) {
   evt.preventDefault();
 
   //Получения введенных значений в поля
@@ -122,7 +130,18 @@ function openImage(evt) {
   popupImageContainer.closest('.popup').classList.toggle('popup_opened');
   popupImage.src = evt.target.src;
   popupCaption.textContent = parent.querySelector('.element__title').textContent;
-}
+
+  document.addEventListener('keydown', closePopupKeyEscape);
+};
+
+function closePopupKeyEscape(evt) {
+  const popup = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape') {
+    popup.classList.remove('popup_opened');
+  }
+  document.removeEventListener('keydown', closePopupKeyEscape);
+};
+
 
 initialItem.forEach(addItem);
 
@@ -132,6 +151,7 @@ editButton.addEventListener('click', () => {
 
 addButton.addEventListener('click', () => {
   openPopup(popupAdd);
+
 });
 
 editForm.addEventListener('submit', formEditSubmitHandler);
@@ -140,19 +160,24 @@ addForm.addEventListener('submit', formAddSubmitHandler);
 elementList.addEventListener('click', (evt) => {
   if (evt.target.classList.contains('element__delete')) {
     deleteItem(evt);
-  }
+  };
 
   if (evt.target.classList.contains('element__like')) {
     like(evt);
-  }
+  };
 
   if (evt.target.classList.contains('element__img')) {
     openImage(evt);
-  }
+  };
 });
 
 document.addEventListener('click', (evt) => {
   if (evt.target.classList.contains('popup__close')) {
     closePopup(evt);
-  }
+  };
+
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt);
+  };
 });
+

@@ -1,0 +1,7 @@
+.popup__fieldset-element {
+  margin-bottom: 30px;
+}
+
+.popup__fieldset-element:last-of-type{
+  margin-bottom: 0;
+}
