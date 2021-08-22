@@ -44,9 +44,8 @@ function setEventListeners(formElement, validationParameters) {
   const inputList = Array.from(formElement.querySelectorAll(validationParameters.inputSelector));
 
   const buttonElement = formElement.querySelector(validationParameters.submitButtonSelector);
-  if (formElement.name !== 'Edit_profile') {
-    toggleButtonState(inputList, buttonElement, validationParameters);
-  };
+
+  toggleButtonState(inputList, buttonElement, validationParameters);
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
@@ -72,6 +71,13 @@ function toggleButtonState(inputList, buttonElement, validationParameters) {
     buttonElement.classList.remove(validationParameters.inactiveButtonClass);
     buttonElement.disabled = false;
   }
+};
+
+function validationCheckOnOpenPopup(formElement, validationParameters) {
+  const buttonElement = formElement.querySelector(validationParameters.submitButtonSelector);
+
+  buttonElement.classList.add(validationParameters.inactiveButtonClass);
+  buttonElement.disabled = true
 };
 
 function enableValidation(validationParameters) {
