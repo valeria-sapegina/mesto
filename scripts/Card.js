@@ -9,8 +9,8 @@ export default class Card {
   }
 
   _getTemplate = () => {
-    const _template = document.querySelector(this._templateSelector);
-    return _template.content.firstElementChild.cloneNode(true);
+    const template = document.querySelector(this._templateSelector);
+    return template.content.firstElementChild.cloneNode(true);
   }
 
   _addCard = () => {
@@ -20,7 +20,8 @@ export default class Card {
   }
 
   _setEventListeners = () => {
-    this._element.querySelector('.element__like').addEventListener('click', () => {
+    this._likeElement = this._element.querySelector('.element__like');
+    this._likeElement.addEventListener('click', () => {
       this._handleLikeClick();
     });
 
@@ -34,11 +35,12 @@ export default class Card {
   }
 
   _handleLikeClick = () => {
-    this._element.querySelector('.element__like').classList.toggle('element__like_active');
+    this._likeElement.classList.toggle('element__like_active');
   }
 
   _handleDeleteClick = () => {
     this._element.remove();
+    this._element = null;
   }
 
   _handleImageClick = () => {
@@ -46,14 +48,14 @@ export default class Card {
     imagePopup.querySelector('.popup__image').src = this._img;
     imagePopup.querySelector('.popup__image').alt = this._title;
     imagePopup.querySelector('.popup__caption').textContent = this._title;
-    openPopup(imagePopup);
+    openPopup(imagePopup.closest('.popup'));
   }
 
-  render = (container) => {
+  createCard = () => {
     this._element = this._getTemplate();
     this._addCard();
     this._setEventListeners();
 
-    container.prepend(this._element);
+    return this._element;
   }
 }

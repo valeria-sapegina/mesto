@@ -11,7 +11,7 @@ const profileJob = document.querySelector('.profile__job');
 const inputName = document.querySelector('.popup__input_content_name');
 const inputJob = document.querySelector('.popup__input_content_job');
 
-const initialItem = [
+const initialItems = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -47,23 +47,26 @@ const validationParameters = {
   errorClass: 'popup__input-error_active'
 }
 
-const container = document.querySelector('.elements__list');
-
-initialItem.forEach((item) => {
-  const card = new Card(item.name, item.link, '.element-template');
-  card.render(container);
-});
-
 const popupEditValidation = new FormValidation(validationParameters, popupEdit);
 popupEditValidation.enableValidation();
 
 const popupAddValidation = new FormValidation(validationParameters, popupAdd);
 popupAddValidation.enableValidation();
 
+const container = document.querySelector('.elements__list');
+
+initialItems.forEach((item) => {
+  renderCard(item.name, item.link, '.element-template');
+});
+
+function renderCard (name, link, templateSelector) {
+  const card = new Card(name, link, templateSelector);
+  container.prepend(card.createCard());
+}
+
 function openPopupEdit(popup) {
   openPopup(popup);
-  popupEditValidation.makeSubmitButtonInactiveOnOpenPopup();
-  popupEditValidation.resetErrorMessage();
+  popupEditValidation.resetValidation();
 
   inputName.value = profileName.textContent;
   inputJob.value = profileJob.textContent;
@@ -85,8 +88,7 @@ function formEditSubmitHandler(evt) {
 
 function openPopupAdd (popup) {
   openPopup(popup);
-  popupAddValidation.makeSubmitButtonInactiveOnOpenPopup();
-  popupAddValidation.resetErrorMessage();
+  popupAddValidation.resetValidation();
 }
 
 function formAddSubmitHandler(evt) {
@@ -95,15 +97,15 @@ function formAddSubmitHandler(evt) {
   const name = document.querySelector('.popup__input_content_place-name').value;
   const link = document.querySelector('.popup__input_content_image-link').value;
 
-  const card = new Card(name, link, '.element-template');
-  card.render(container);
+  renderCard(name, link, '.element-template');
 
   closePopup(popupAdd);
 }
 
 export function openPopup(popup) {
-  popup.closest('.popup').classList.toggle('popup_opened');
+  popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupKeyEscape);
+  setEventListenersOnPopup(popup);
 }
 
 function clearPopup(popup) {
@@ -112,7 +114,7 @@ function clearPopup(popup) {
 }
 
 function closePopup(popup) {
-  popup.classList.toggle('popup_opened');
+  popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupKeyEscape);
 }
 
@@ -122,6 +124,16 @@ function closePopupKeyEscape(evt) {
     closePopup(popup);
   }
 };
+
+function setEventListenersOnPopup(popup) {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup__close')) {
+      closePopup(evt.target.closest('.popup'));
+    } else if (evt.target.classList.contains('popup')) {
+      closePopup(evt.target);
+    };
+  });
+}
 
 editButton.addEventListener('click', () => {
   openPopupEdit(popupEdit);
@@ -135,12 +147,4 @@ addButton.addEventListener('click', () => {
 popupEdit.querySelector('.popup__form').addEventListener('submit', formEditSubmitHandler);
 popupAdd.querySelector('.popup__form').addEventListener('submit', formAddSubmitHandler);
 
-document.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('popup__close')) {
-    closePopup(evt.target.closest('.popup'));
-  };
 
-  if (evt.target.classList.contains('popup')) {
-    closePopup(evt.target);
-  };
-});
