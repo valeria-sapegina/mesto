@@ -11,6 +11,8 @@ const profileJob = document.querySelector('.profile__job');
 const inputName = document.querySelector('.popup__input_content_name');
 const inputJob = document.querySelector('.popup__input_content_job');
 
+const popupList = document.querySelectorAll('.popup');
+
 const initialItems = [
   {
     name: 'Архыз',
@@ -52,6 +54,10 @@ popupEditValidation.enableValidation();
 
 const popupAddValidation = new FormValidation(validationParameters, popupAdd);
 popupAddValidation.enableValidation();
+
+popupList.forEach((popup) => {
+  setEventListenersOnPopup(popup);
+});
 
 const container = document.querySelector('.elements__list');
 
@@ -105,7 +111,6 @@ function formAddSubmitHandler(evt) {
 export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupKeyEscape);
-  setEventListenersOnPopup(popup);
 }
 
 function clearPopup(popup) {
