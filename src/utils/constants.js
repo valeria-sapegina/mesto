@@ -36,6 +36,3 @@ export const validationParameters = {
 
 export const editButton = document.querySelector('.button_type_edit');
 export const addButton = document.querySelector('.button_type_add');
-
-export const profileName = document.querySelector('.profile__name');
-export const profileJob = document.querySelector('.profile__job');

@@ -13,12 +13,7 @@ import {
 import UserInfo from '../components/UserInfo.js';
 
 //Объект UserInfo с селекторами элемента имени пользователя и элемента информации и себе
-const userInfo = new UserInfo(
-  {
-    name:'profile__name',
-    job:'profile__job'
-  }
-);
+const userInfo = new UserInfo('.profile__name', '.profile__job');
 
 //Создание объекта Секции для отрисовки изначального массива карточек
 const cardsList = new Section({
@@ -38,10 +33,9 @@ const popupAdd = new PopupWithForm(
   (evt) => {
     evt.preventDefault();
 
-    const name = document.querySelector('.popup__input_content_place-name').value;
-    const link = document.querySelector('.popup__input_content_image-link').value;
+    const inputValues = popupAdd.getInputValues();
+    const card = createCard(inputValues.place, inputValues.image);
 
-    const card = createCard(name, link);
     cardsList.addItem(card);
 
     popupAdd.close();
@@ -55,9 +49,8 @@ const popupEdit = new PopupWithForm(
   (evt) => {
     evt.preventDefault();
 
-    const inputValues = popupEdit._getInputValues();
-
-    userInfo.setUserInfo(inputValues.name, inputValues.job);
+    const inputValues = popupEdit.getInputValues();
+    userInfo.setUserInfo(inputValues);
 
     popupEdit.close();
   }
@@ -94,6 +87,7 @@ popupImage.setEventListeners();
 
 editButton.addEventListener('click', () => {
   popupEdit.open();
+  popupEdit.setInputValues(userInfo.getUserInfo());
   popupEditValidation.resetValidation();
 });
 
