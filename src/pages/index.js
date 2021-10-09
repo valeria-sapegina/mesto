@@ -4,24 +4,34 @@ import FormValidation from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithDelete from '../components/PopupWithDelete.js';
 import {
-  initialItems,
   validationParameters,
   editButton,
-  addButton
+  addButton,
 } from '../utils/constants.js'
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api';
+
+const api = new Api('https://mesto.nomoreparties.co/v1/cohort-28', 'd4cb5b7f-5320-434f-86cf-ffb43333f91a');
 
 //Объект UserInfo с селекторами элемента имени пользователя и элемента информации и себе
-const userInfo = new UserInfo('.profile__name', '.profile__job');
+const userInfo = new UserInfo('.profile__name', '.profile__job', '.profile__avatar');
+api.getUserInfo()
+  .then(data => {
+    userInfo.setUserInfo(data);
+  })
+
 
 //Создание объекта Секции для отрисовки изначального массива карточек
 const cardsList = new Section({
-  items: initialItems,
-  renderer: (item) => {
-    const card = createCard(item.name, item.link);
-    cardsList.addItem(card);
-    },
+  items: [],
+  renderer: api.getInitialCards().then(data => {
+    data.forEach((dataItem) => {
+      const card = createCard(dataItem);
+      cardsList.addItemAppend(card);
+    })
+  })
   },
   '.elements__list'
 );
@@ -34,9 +44,12 @@ const popupAdd = new PopupWithForm(
     evt.preventDefault();
 
     const inputValues = popupAdd.getInputValues();
-    const card = createCard(inputValues.place, inputValues.image);
 
-    cardsList.addItem(card);
+    api.addCard(inputValues.place, inputValues.image)
+      .then(data => {
+        const card = createCard(data);
+        cardsList.addItemPrepend(card);
+      })
 
     popupAdd.close();
   }
@@ -50,7 +63,10 @@ const popupEdit = new PopupWithForm(
     evt.preventDefault();
 
     const inputValues = popupEdit.getInputValues();
-    userInfo.setUserInfo(inputValues);
+    api.setUserInfo(inputValues.name, inputValues.job)
+      .then(data => {
+        userInfo.setUserInfo(data);
+      })
 
     popupEdit.close();
   }
@@ -58,6 +74,8 @@ const popupEdit = new PopupWithForm(
 
 //Создание объекта попап открытия картинки из карточки
 const popupImage = new PopupWithImage('.popup_type_image');
+
+const popupDelete = new PopupWithDelete('.popup_type_delete');
 
 //Объект для валидации формы редактирования информации о пользователе
 const popupEditValidation = new FormValidation(validationParameters, document.querySelector('.popup_type_edit'));
@@ -75,8 +93,26 @@ function handleImageClick(name, title) {
 };
 
 //Создание карточки
-function createCard(name, link) {
-  const card = new Card(name, link, '.element-template', handleImageClick);
+function createCard(data) {
+  const card = new Card({
+    data: data,
+    templateSelector: '.element-template',
+    userId: userInfo.userId,
+    handleImageClick,
+    handleDeleteClick: (card) => {
+      popupDelete.open();
+      popupDelete.setSubmitAction({
+        cardId: card.cardId,
+        deleteCard: (cardId) => {
+          api.deleteCard(cardId)
+           .then(data => {
+              card.handleDeleteCard();
+              popupDelete.close();
+            })
+        }
+      })
+    }
+  });
   const cardElement = card.createCard();
   return cardElement;
 }
@@ -84,6 +120,7 @@ function createCard(name, link) {
 popupEdit.setEventListeners();
 popupAdd.setEventListeners();
 popupImage.setEventListeners();
+popupDelete.setEventListeners();
 
 editButton.addEventListener('click', () => {
   popupEdit.open();
@@ -95,3 +132,4 @@ addButton.addEventListener('click', () => {
   popupAdd.open();
   popupAddValidation.resetValidation();
 });
+
