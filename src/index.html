@@ -17,10 +17,12 @@
     <main class="content">
       <section class="profile">
         <div class="profile__elements">
-          <img src="" alt="Аватар" class="profile__avatar">
+          <div class="profile__avatar-container">
+            <img src="" alt="Аватар" class="profile__avatar">
+          </div>
           <div class="profile__info">
             <div class="profile__group">
-              <h1 class="profile__name"></h1>
+              <h1 class="profile__name">111</h1>
               <button class="button button_type_edit" type="button"></button>
             </div>
             <p class="profile__job">Исследователь океана</p>
@@ -84,6 +86,23 @@
 
         </fieldset>
         <button class="popup__submit-btn" type="submit">Создать</button>
+      </form>
+      <button type="button" class="popup__close"></button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_changeAvatar popup_background_translucent">
+    <div class="popup__container popup__container_type_avatar">
+      <form class="popup__form" name="ChangeAvatar" novalidate>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <fieldset class="popup__fieldset">
+          <div class="popup__fieldset-element">
+            <input class="popup__input popup__input_content_avatar" id="avatar" type="url" value=""
+            name="avatar" placeholder="Ссылка на картинку" required>
+            <span class="popup__input-error avatar-error"></span>
+          </div>
+        </fieldset>
+        <button class="popup__submit-btn" type="submit">Сохранить</button>
       </form>
       <button type="button" class="popup__close"></button>
     </div>

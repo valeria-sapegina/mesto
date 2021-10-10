@@ -1,15 +1,15 @@
 export default class Card {
 
-  constructor({data, templateSelector, userId, handleImageClick, handleDeleteClick}) {
+  constructor({data, templateSelector, userId, handleImageClick, handleDeleteClick, handleLikeClick}) {
     this._img = data.link;
     this._title = data.name;
-    this._likeCount = data.likes.length;
     this._ownerId = data.owner._id;
     this._userId = userId;
     this.cardId = data._id;
     this._templateSelector = templateSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteClick = handleDeleteClick;
+    this._handleLikeClick = handleLikeClick;
     this._likesList = data.likes;
     this.likeStatus = false;
     }
@@ -28,7 +28,7 @@ export default class Card {
   _setEventListeners() {
     this._likeElement = this._element.querySelector('.element__like');
     this._likeElement.addEventListener('click', () => {
-      this._handleLikeClick();
+      this._handleLikeClick(this);
     });
 
     this._element.querySelector('.element__delete').addEventListener('click', () => {
@@ -40,9 +40,9 @@ export default class Card {
     });
   }
 
-  _handleLikeClick() {
-    this._likeElement.classList.toggle('element__like_active');
-  }
+  // _handleLikeClick() {
+  //   this._likeElement.classList.toggle('element__like_active');
+  // }
 
   handleDeleteCard() {
     this._element.remove();
@@ -53,14 +53,11 @@ export default class Card {
     this._element = this._getTemplate();
     this._addCard();
     this._setEventListeners();
-    this._setLikesInfo();
+    this.setLikesInfo();
     this._removeDeleteFromNonOwner();
 
     this.likeStatus = this._isLiked();
-    if (this.likeStatus) {
-      this._likeElement.classList.add('element__like_active');
-    }
-
+    this.togleActiveLike();
 
     return this._element;
   }
@@ -73,19 +70,25 @@ export default class Card {
 
   _isLiked() {
     let flag = false;
-    if(this._likesList != undefined) {
-      this._likesList.forEach((like) => {
-        if (like._id === this._userId) {
-          flag = true;
-        }
-      })
-    }
+    this._likesList.forEach((like) => {
+      if (like._id === this._userId) {
+        flag = true;
+      }
+    })
 
     return flag;
   }
 
-  _setLikesInfo() {
+  setLikesInfo() {
     this._likeCountElement = this._element.querySelector('.element__count-like');
-    this._likeCountElement.textContent = this._likeCount;
+    this._likeCountElement.textContent = this._likesList.length;
+  }
+
+  togleActiveLike() {
+    if (this.likeStatus) {
+      this._likeElement.classList.add('element__like_active');
+    } else if (!this.likeStatus) {
+      this._likeElement.classList.remove('element__like_active');
+    }
   }
 }

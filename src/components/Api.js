@@ -55,6 +55,26 @@ export default class Api {
     .catch(e => console.log(e))
   }
 
+  setAvatarInfo(avatar) {
+    return fetch(this._baseUrl + '/users/me/avatar', {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: avatar
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch(e => console.log(e))
+  }
+
   addCard(place, image) {
     return fetch(this._baseUrl + '/cards', {
       method: 'POST',
@@ -93,14 +113,21 @@ export default class Api {
     .catch(e => console.log(e))
   }
 
-  // changeLikeStatus (cardId, likeStatus) {
-  //   return fetch(this._baseUrl + '/cards/likes/' + cardId, {
-  //     method: likeStatus ? 'PUT' : 'DELETE',
-  //     headers: {
-  //       authorization: this._token,
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  // }
+  changeLikeStatus (cardId, likeStatus) {
+    return fetch(this._baseUrl + '/cards/likes/' + cardId, {
+      method: likeStatus ? 'DELETE' : 'PUT',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch(e => console.log(e))
+  }
 }
 

@@ -9,3 +9,4 @@ export const validationParameters = {
 
 export const editButton = document.querySelector('.button_type_edit');
 export const addButton = document.querySelector('.button_type_add');
+export const changeAvatarButton = document.querySelector('.profile__avatar-container');

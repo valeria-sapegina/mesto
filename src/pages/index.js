@@ -9,6 +9,7 @@ import {
   validationParameters,
   editButton,
   addButton,
+  changeAvatarButton,
 } from '../utils/constants.js'
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api';
@@ -21,17 +22,23 @@ api.getUserInfo()
   .then(data => {
     userInfo.setUserInfo(data);
   })
-
+  .catch((err) => {
+    console.log(err);
+  });
 
 //Создание объекта Секции для отрисовки изначального массива карточек
 const cardsList = new Section({
   items: [],
-  renderer: api.getInitialCards().then(data => {
-    data.forEach((dataItem) => {
-      const card = createCard(dataItem);
-      cardsList.addItemAppend(card);
+  renderer: api.getInitialCards().
+    then(data => {
+      data.forEach((dataItem) => {
+        const card = createCard(dataItem);
+        cardsList.addItemAppend(card);
+      })
     })
-  })
+    .catch((err) => {
+      console.log(err);
+    })
   },
   '.elements__list'
 );
@@ -42,6 +49,7 @@ const popupAdd = new PopupWithForm(
   //Функция коллбэк сабмита формы
   (evt) => {
     evt.preventDefault();
+    popupAdd.renderLoading(true);
 
     const inputValues = popupAdd.getInputValues();
 
@@ -49,9 +57,12 @@ const popupAdd = new PopupWithForm(
       .then(data => {
         const card = createCard(data);
         cardsList.addItemPrepend(card);
+        popupAdd.renderLoading(false);
+        popupAdd.close();
       })
-
-    popupAdd.close();
+      .catch((err) => {
+        console.log(err);
+      });
   }
 );
 
@@ -62,15 +73,38 @@ const popupEdit = new PopupWithForm(
   (evt) => {
     evt.preventDefault();
 
+    popupEdit.renderLoading(true);
     const inputValues = popupEdit.getInputValues();
     api.setUserInfo(inputValues.name, inputValues.job)
       .then(data => {
         userInfo.setUserInfo(data);
+        popupEdit.renderLoading(false);
+        popupEdit.close();
       })
-
-    popupEdit.close();
+      .catch((err) => {
+        console.log(err);
+      });
   }
 );
+
+const popupChangeAvatar = new PopupWithForm(
+  '.popup_type_changeAvatar',
+  (evt) => {
+    evt.preventDefault();
+    popupChangeAvatar.renderLoading(true);
+
+    const inputValues = popupChangeAvatar.getInputValues();
+    api.setAvatarInfo(inputValues.avatar)
+      .then(data => {
+        userInfo.setUserInfo(data);
+        popupChangeAvatar.renderLoading(false);
+        popupChangeAvatar.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+)
 
 //Создание объекта попап открытия картинки из карточки
 const popupImage = new PopupWithImage('.popup_type_image');
@@ -84,6 +118,9 @@ popupEditValidation.enableValidation();
 //Объект для валидации формы добавления карточки
 const popupAddValidation = new FormValidation(validationParameters, document.querySelector('.popup_type_add'));
 popupAddValidation.enableValidation();
+
+const popupChangeAvatarValidation = new FormValidation (validationParameters, document.querySelector('.popup_type_changeAvatar'));
+popupChangeAvatarValidation.enableValidation();
 
 cardsList.renderItems(); //Отрисовка карточек
 
@@ -109,8 +146,23 @@ function createCard(data) {
               card.handleDeleteCard();
               popupDelete.close();
             })
+            .catch((err) => {
+              console.log(err);
+            });
         }
       })
+    },
+    handleLikeClick: (card) => {
+      api.changeLikeStatus(card.cardId, card.likeStatus)
+        .then(data => {
+          card._likesList = data.likes;
+          card.likeStatus = card._isLiked();
+          card.setLikesInfo();
+          card.togleActiveLike();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   });
   const cardElement = card.createCard();
@@ -121,6 +173,7 @@ popupEdit.setEventListeners();
 popupAdd.setEventListeners();
 popupImage.setEventListeners();
 popupDelete.setEventListeners();
+popupChangeAvatar.setEventListeners();
 
 editButton.addEventListener('click', () => {
   popupEdit.open();
@@ -133,3 +186,7 @@ addButton.addEventListener('click', () => {
   popupAddValidation.resetValidation();
 });
 
+changeAvatarButton.addEventListener('click', () => {
+  popupChangeAvatar.open();
+  popupChangeAvatarValidation.resetValidation();
+})

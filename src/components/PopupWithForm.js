@@ -33,4 +33,18 @@ export default class PopupWithForm extends Popup {
 
    this._form.addEventListener('submit', this._formSubmitHandler);
   }
+
+  renderLoading(isLoading) {
+    this._submitBtn = this._popup.querySelector('.popup__submit-btn');
+    if (isLoading) {
+      this._textBefore = this._submitBtn.textContent;
+      if (this._submitBtn.textContent === 'Сохранить') {
+        this._submitBtn.textContent = 'Сохранение...'
+      } else if (this._submitBtn.textContent === 'Создать') {
+        this._submitBtn.textContent = 'Создание...'
+      } 
+    } else {
+      this._submitBtn.textContent =  this._textBefore;
+    }
+  }
 }
