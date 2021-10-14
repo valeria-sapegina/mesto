@@ -91,4 +91,12 @@ export default class Card {
       this._likeElement.classList.remove('element__like_active');
     }
   }
+
+  updateLikes(data) {
+    this._likesList = data.likes;
+    this.likeStatus = this._isLiked();
+    this.setLikesInfo();
+    this.togleActiveLike();
+  }
+
 }

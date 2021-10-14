@@ -9,13 +9,16 @@ export default class PopupWithDelete extends Popup {
   }
 
   setSubmitAction({cardId, deleteCard}) {
-    this._form.addEventListener('submit',(evt) => {
-      evt.preventDefault();
-      deleteCard(cardId);
-    });
+    this._cardId = cardId;
+    this._deleteCard = deleteCard;
   }
 
   setEventListeners() {
     super.setEventListeners();
+    
+    this._form.addEventListener('submit',(evt) => {
+      evt.preventDefault();
+      this._deleteCard(this._cardId);
+    });
   }
 }
